@@ -148,6 +148,8 @@ func (r *RollDPoS) HandleConsensusMsg(msg *iotexrpc.Consensus) error {
 			return errors.Wrap(err, "failed to deserialize block")
 		}
 		log.L().Debug("receive block message", zap.Any("msg", block))
+		log.L().Error("receive block message", zap.Uint32("round", msg.Round), zap.Uint64("height", block.Height()), zap.Int("action number", len(block.Actions)))
+		log.L().Error("current round number", zap.Uint32("round", r.ctx.round.number))
 		// TODO: add proof of lock
 		if msg.Height != block.Height() {
 			return errors.Errorf(
